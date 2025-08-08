@@ -179,6 +179,9 @@ class LinkedList:
 
     def get_nth_back(self, n):
         
+        # Time Complexity ==> O(n)
+        # Space Complexity ==> O(1)
+        
         steps = self.length - n 
         temp = self.head
         
@@ -193,7 +196,63 @@ class LinkedList:
         
         return temp
         
-
+    def is_identical_to(self, lst):
+        # Time Complexity ==> O(n)
+        # Space Complexity ==> O(1)
+        
+        len1,len2 = 0, 0
+        
+        temp1,temp2 = self.head, lst.head
+        
+        while temp1 is not None:
+            len1 += 1
+            temp1 = temp1.next
+        
+        while temp2 is not None:
+            len2 += 1
+            temp2 = temp2.next
+            
+        temp1,temp2 = self.head, lst.head   
+        
+        if len1 == len2:
+            while temp2 is not None:
+                if temp1.data == temp2.data:
+                    temp1 = temp1.next
+                    temp2 = temp2.next
+                    
+                else :
+                    return False
+                
+            return True
+        else:
+            return False
+        
+    def add_element(self, value):
+        # Time Complexity ==> O(n)
+        # Space Complexity ==> O(1)
+        
+        # Empty List
+        if not self.head:
+            self.head = Node(value)
+            return
+        
+        temp = self.head
+        
+        # Traverse in next has data
+        while temp.next: temp = temp.next
+        
+        temp.next = Node(value)
+            
+    def get_tail(self):
+        if not self.head : return "None"
+        
+        temp = self.head
+        
+        while temp.next : temp = temp.next
+        
+        return temp
+        
+        
 def test1():
     func_name = inspect.currentframe().f_code.co_name
     print(f'Testing {func_name}')
@@ -430,6 +489,120 @@ def test16():
     assert result == expected, f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
     print('PASSED\n')
 
+def test17():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst1 = LinkedList([1,2,3])
+    lst2 = LinkedList([1,2,3,5,5,5])
+    
+    result = str(lst1.is_identical_to(lst2))
+    expected = "False"
+    
+    assert result == expected, f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test18():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst1 = LinkedList([1,2,3])
+    lst2 = LinkedList([1,2,4])
+    
+    result = str(lst1.is_identical_to(lst2))
+    expected = "False"
+    
+    assert result == expected, f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+
+def test19():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst1 = LinkedList([1,2,3])
+    lst2 = LinkedList([1,2,3])
+    
+    result = str(lst1.is_identical_to(lst2))
+    expected = "True"
+    
+    assert result == expected, f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test20():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([])
+    lst.add_element(10)
+    
+    result = str(lst)
+    expected = "10"
+    print(result)
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test21():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([10])
+    lst.add_element(20)
+    
+    result = str(lst)
+    expected = "10, 20"
+    print(result)
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+
+def test22():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([10, 20])
+    lst.add_element(30)
+    
+    result = str(lst)
+    expected = "10, 20, 30"
+    print(result)
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+
+def test23():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([])
+    
+    result = str(lst.get_tail())
+    expected = "None"
+
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test24():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([10])
+    
+    result = str(lst.get_tail())
+    expected = "10"
+
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test25():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+    
+    lst = LinkedList([10, 20])
+    
+    result = str(lst.get_tail())
+    expected = "20"
+
+    assert result == expected , f'Mismatch between expected=[{expected}] and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
 
 if __name__ == '__main__':
     # test1()  # empty
@@ -449,12 +622,22 @@ if __name__ == '__main__':
     # test11()  # N elements
     # test12()  # N elements with N deletion
     
-    test13()  # None if such position doesn’t exist
-    test14()  # N elements
-    test15()  # one element
-    test16()  # empty
+    # test13()  # None if such position doesn’t exist
+    # test14()  # N elements
+    # test15()  # one element
+    # test16()  # empty
     
+    # test17() # different length
+    # test18() # same length with different values
+    # test19() # same length with same values
     
+    # test20() # empty list
+    # test21() # one element in list
+    # test22() # two element in list
+    
+    test23() # empty list
+    test24() # one element
+    test25() # two element in list
     
     # Must see to insure no RTE
     print('ALL CASES PASSED')
