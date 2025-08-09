@@ -238,7 +238,7 @@ class LinkedList:
         
         temp = self.head
         
-        # Traverse in next has data
+        # Traverse to next if has data
         while temp.next: temp = temp.next
         
         temp.next = Node(value)
