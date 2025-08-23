@@ -194,6 +194,9 @@ class LinkedList:
         return temp
     
     def delete_node_with_key(self, value):
+        # Time Complexity ==> O(n)
+        # Space Complexity ==> O(1)
+        
         if self.length == 0:
             return "Empty List"
         
@@ -216,6 +219,36 @@ class LinkedList:
                     
                 prev, curr = curr , curr.next
         self.debug_verify_data_integrity()
+
+    def swap_pairs(self):
+        dummy = Node(0)
+        dummy.next = self.head
+        prev = dummy
+        curr = self.head
+        
+        if not self.head or not self.head.next:
+            return ''
+        
+        while curr and curr.next :
+            first= curr
+            seconde = curr.next
+            
+            # Swapping
+            prev.next = seconde         # dummy => 2
+            first.next = seconde.next   # 1 => 3
+            seconde.next = first        # 2 => 1
+            
+            # Move Pointers
+            prev = first
+            curr = first.next
+        
+        # reset the head
+        self.head = dummy.next
+        self.tail = prev if self.length % 2 == 0 else curr
+            
+            
+
+
 def test1():
     func_name = inspect.currentframe().f_code.co_name
     print(f'Testing {func_name}')
@@ -326,16 +359,88 @@ def test7():
         f'Mismatch between expected=[{expected}] ' \
         f'and result=[{result}] in {func_name}'
     print('PASSED\n')
+    
+def test8():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+
+    lst = LinkedList([10, 20, 30, 40])
+    
+    lst.swap_pairs()
+    result = str(lst)
+    lst.debug_print_existing_nodes()
+    expected = '20, 10, 40, 30'
+
+    assert result == expected, \
+        f'Mismatch between expected=[{expected}] ' \
+        f'and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test9():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+
+    lst = LinkedList([10, 20])
+    
+    lst.swap_pairs()
+    result = str(lst)
+    lst.debug_print_existing_nodes()
+    expected = '20, 10'
+
+    assert result == expected, \
+        f'Mismatch between expected=[{expected}] ' \
+        f'and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test10():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+
+    lst = LinkedList([10, 20, 30])
+    
+    lst.swap_pairs()
+    result = str(lst)
+    lst.debug_print_existing_nodes()
+    expected = '20, 10, 30'
+
+    assert result == expected, \
+        f'Mismatch between expected=[{expected}] ' \
+        f'and result=[{result}] in {func_name}'
+    print('PASSED\n')
+    
+def test11():
+    func_name = inspect.currentframe().f_code.co_name
+    print(f'Testing {func_name}')
+
+    lst = LinkedList([])
+    
+    lst.swap_pairs()
+    result = str(lst)
+    lst.debug_print_existing_nodes()
+    expected = ''
+
+    assert result == expected, \
+        f'Mismatch between expected=[{expected}] ' \
+        f'and result=[{result}] in {func_name}'
+    print('PASSED\n')
 
 
 if __name__ == '__main__':
-    test1()
-    test2()
-    test3()
-    test4()
-    test5()
-    test6()
-    test7()
+    
+    # ========= delete with value =========
+    # test1()
+    # test2()
+    # test3()
+    # test4()
+    # test5()
+    # test6()
+    # test7()
+    
+    # ========= swap pairs =========
+    test8()
+    test9()
+    test10()
+    test11()
 
     # Must see to insure no RTE
     print('ALL CASES PASSED')
